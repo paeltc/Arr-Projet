@@ -58,7 +58,7 @@ services:
       - ${DOCKERCONFDIR}/sonarr:/config
       - ${DOCKERSTORAGEDIR}:/data
 
-########################### Bazarr - TV shows and movies - Anime #########################
+################################### Bazarr - Subtiles ####################################
 # Bazarr - https://hotio.dev/containers/bazarr/
 # mkdir /volume1/docker/arr-data/bazarr
 ##########################################################################################
