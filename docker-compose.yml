@@ -250,8 +250,21 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/plex:/config:rw
       - ${DOCKERSTORAGEDIR}/media:/data/media:rw
+
+
+################################# ARR Stack Dedicated Network ##############################
+# ARR Stack Dedicated Network
+############################################################################################
+
+networks:
+  default:
+    name: arr_network
+
+
+##############################################################################################################################################################################################    
 #    devices:                                        # optional: if you have a Syno with an Intel CPU with quicksync and want hardware transcoding (only with Plex Pass) uncomment this line.
 #      - /dev/dri:/dev/dri                           # optional: if you have a Syno with an Intel CPU with quicksync and want hardware transcoding (only with Plex Pass) uncomment this line.
 #    tmpfs:                                          # optional: if you have a Syno with enough RAM, you can uncomment this line to enable transcoding in RAM. uncomment this line.
 #      - /transcode                                  # optional: if you have a Syno with enough RAM, you can uncomment this line to enable transcoding in RAM. uncomment this line.
 #Additional containers goaccess, portainer, watchtower, jellifin, pullio, qbittorrent,gluetun etc. can be added here as needed.
+###############################################################################################################################################################################################
