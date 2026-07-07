@@ -189,6 +189,7 @@ services:
 
 ##################################### JELLYFIN - Media Server ############################
 # JELLYFIN - Media Server
+# mkdir -p /volume1/docker/arr-data/jellyfin
 ##########################################################################################
   jellyfin:
     container_name: jellyfin
