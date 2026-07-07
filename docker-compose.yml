@@ -2,7 +2,7 @@ version: "3.2"
 services:
 ################################ Radarr - Movies #####################################
 # Radarr - https://hotio.dev/containers/radarr/
-# mkdir /volume1/docker/appdata/radarr
+# mkdir /volume1/docker/arr-data/radarr
 ######################################################################################
   radarr:
     container_name: radarr
@@ -115,7 +115,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/lidarr:/config
-      - ${DOCKERSTORAGEDIR}/music:/data/media
+      - ${DOCKERSTORAGEDIR}/media:/data/media
 
 ############################## prowlarr - Indexer manager #################################
 # Prowlarr - https://hotio.dev/containers/prowlarr/
@@ -145,6 +145,35 @@ services:
       - ARGS=
     volumes:
       - ${DOCKERCONFDIR}/prowlarr:/config:rw
+
+################################## QBITTORRENT - Downloader ##############################
+# QBITTORRENT - Downloader
+# mkdir /volume1/docker/arr-data/qbittorrent
+##########################################################################################
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    environment:
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DOCKERCONFDIR}/qbittorrent:/config
+      - ${DOCKERSTORAGEDIR}/torrents:/data
 
 ################################## Plex - Media server ###################################
 # Plex - https://hotio.dev/containers/plex/
