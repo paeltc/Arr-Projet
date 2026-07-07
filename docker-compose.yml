@@ -189,7 +189,7 @@ services:
 
 ##################################### JELLYFIN - Media Server ############################
 # JELLYFIN - Media Server
-# mkdir -p /volume1/docker/arr-data/jellyfin
+# mkdir -p /volume1/docker/arr-data/jellyfin/cache
 ##########################################################################################
   jellyfin:
     container_name: jellyfin
@@ -214,6 +214,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/jellyfin:/config
+      - ${DOCKERCONFDIR}/jellyfin/cache:/cache
       - ${DOCKERSTORAGEDIR}/media:/data/media:ro #read-only
 
 
