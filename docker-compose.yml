@@ -117,7 +117,7 @@ services:
       - ${DOCKERCONFDIR}/lidarr:/config
       - ${DOCKERSTORAGEDIR}/music:/data/media
 
-############# prowlarr - Indexer manager and proxy built on the *arr ######################
+############################## prowlarr - Indexer manager #################################
 # Prowlarr - https://hotio.dev/containers/prowlarr/
 # Don't forget to create the directory, change chown command if needed (the user:group part)
 # sudo -u docker mkdir -m=00775 /volume1/docker/arr-data/prowlarr
