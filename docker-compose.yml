@@ -1,7 +1,9 @@
 version: "3.2"
 services:
-# Radarr - https://hotio.dev/containers/radarr/
-# mkdir /volume1/docker/appdata/radarr
+######################## Radarr - Movies #############################
+#       Radarr - https://hotio.dev/containers/radarr/
+#           mkdir /volume1/docker/appdata/radarr
+######################################################################
   radarr:
     container_name: radarr
     image: ghcr.io/hotio/radarr:latest
@@ -27,8 +29,10 @@ services:
       - ${DOCKERCONFDIR}/radarr:/config
       - ${DOCKERSTORAGEDIR}:/data
 
-# Sonarr - https://hotio.dev/containers/sonarr/
-# mkdir /volume1/docker/arr-data/sonarr
+############################## Sonarr - TV ###########################
+#           Sonarr - https://hotio.dev/containers/sonarr/
+#             mkdir /volume1/docker/arr-data/sonarr
+######################################################################
   sonarr:
     container_name: sonarr
     image: ghcr.io/hotio/sonarr:release
@@ -54,8 +58,10 @@ services:
       - ${DOCKERCONFDIR}/sonarr:/config
       - ${DOCKERSTORAGEDIR}:/data
 
-# Bazarr - https://hotio.dev/containers/bazarr/
-# mkdir /volume1/docker/arr-data/bazarr
+###################### Bazarr - TV shows and movies - Anime ############
+#          Bazarr - https://hotio.dev/containers/bazarr/
+#               mkdir /volume1/docker/arr-data/bazarr
+########################################################################
   bazarr:
     container_name: bazarr
     image: ghcr.io/hotio/bazarr:nightly
@@ -81,11 +87,12 @@ services:
       - ${DOCKERCONFDIR}/bazarr:/config
       - ${DOCKERSTORAGEDIR}/media:/data/media
 
-# Prowlarr - https://hotio.dev/containers/prowlarr/
-#
-# Don't forget to create the directory, change chown command if needed (the user:group part)
+######## prowlarr - Indexer manager and proxy built on the *arr ###########
+#           Prowlarr - https://hotio.dev/containers/prowlarr/
+# Don't forget to create the directory, change chown command if needed 
+#                     (the user:group part)
 # sudo -u docker mkdir -m=00775 /volume1/docker/arr-data/prowlarr
-#
+###########################################################################
   prowlarr:
     container_name: prowlarr
     image: ghcr.io/hotio/prowlarr:testing
@@ -110,9 +117,12 @@ services:
     volumes:
       - ${DOCKERCONFDIR}/prowlarr:/config:rw
 
-# Plex - https://hotio.dev/containers/plex/
-# mkdir -p /volume1/docker/arr-data/plex
-# Also please read the extra info => https://trash-guides.info/Hardlinks/How-to-setup-for/Synology/#appdata
+############################### Plex - Media server ##########################
+#                 Plex - https://hotio.dev/containers/plex/
+#                   mkdir -p /volume1/docker/arr-data/plex
+#                     Also please read the extra info => 
+#    https://trash-guides.info/Hardlinks/How-to-setup-for/Synology/#appdata
+###############################################################################
   plex:
     container_name: plex
     image: ghcr.io/hotio/plex
