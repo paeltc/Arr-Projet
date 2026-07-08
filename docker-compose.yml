@@ -329,9 +329,9 @@ services:
       - 7880:7880
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      #- ./data/npm_data/logs:/opt/log
       - ${DOCKERCONFDIR}/goaccess/logs:/opt/log
-        # - ./data/npm_data/logs/proxy-host-1_access.log:/opt/log/proxy-host-1_access.log
+      #- ./data/npm_data/logs:/opt/log
+      # - ./data/npm_data/logs/proxy-host-1_access.log:/opt/log/proxy-host-1_access.log
 
         
 ################################# ARR Stack Dedicated Network ##############################
