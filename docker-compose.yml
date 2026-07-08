@@ -6,12 +6,13 @@ services:
 # Radarr       |  7878:7878    |             |                |
 # Sonarr       |  8989:8989    |             |                |
 # Bazarr       |  6767:6767    |             |                |
-# lidarr       |  8686:8686    |             |                |
+# Lidarr       |  8686:8686    |             |                |
 # Whisparr     |  6969:6969    |             |                |
 # Prowlarr     |  9696:9696    |             |                |
-# jellyfin     |  8096:8096    |             |                |
+# Qbittorrent  |  8080:8080    |  6881:6881  | 6881:6881/udp  |
+# Jellyfin     |  8096:8096    |             |                |
 # Plex         |  32400:32400  |             |                |
-# qbittorrent  |  8080:8080    |  6881:6881  | 6881:6881/udp  |
+# GoAccess     |  7880:7880    |             |                |
 #--------------------------------------------------------------
 
 ################################ Radarr - Movies #####################################
@@ -106,7 +107,7 @@ services:
       - ${DOCKERSTORAGEDIR}/media:/data/media
 
 
-######################################## LIDARR - Music ###################################
+######################################## Lidarr - Music ###################################
 # lidarr - https://hotio.dev/containers/lidarr/
 # mkdir /volume1/docker/arr-data/lidarr
 ###########################################################################################
@@ -166,7 +167,7 @@ services:
       - ${DOCKERSTORAGEDIR}/media:/data/media
       
 
-############################## prowlarr - Indexer manager #################################
+############################## Prowlarr - Indexer manager #################################
 # Prowlarr - https://hotio.dev/containers/prowlarr/
 # Don't forget to create the directory, change chown command if needed (the user:group part)
 # sudo -u docker mkdir -m=00775 /volume1/docker/arr-data/prowlarr
@@ -196,8 +197,8 @@ services:
       - ${DOCKERCONFDIR}/prowlarr:/config:rw
 
 
-################################## QBITTORRENT - Downloader ##############################
-# qbittorrent - Downloader
+################################## Qbittorrent - Downloader ##############################
+# Qbittorrent - Downloader
 # mkdir /volume1/docker/arr-data/qbittorrent
 ##########################################################################################
   qbittorrent:
@@ -230,8 +231,8 @@ services:
       - ${DOCKERSTORAGEDIR}/torrents:/data
 
 
-##################################### JELLYFIN - Media Server ############################
-# jellyfin - Media Server
+##################################### Jellyfin - Media Server ############################
+# Jellyfin - Media Server
 # mkdir -p /volume1/docker/arr-data/jellyfin/config
 # mkdir -p /volume1/docker/arr-data/jellyfin/cache
 ##########################################################################################
@@ -263,7 +264,7 @@ services:
 
 
 ################################## Plex - Media server ###################################
-# plex - https://hotio.dev/containers/plex/
+# Plex - https://hotio.dev/containers/plex/
 # mkdir -p /volume1/docker/arr-data/plex
 # Also please read the extra info => 
 # https://trash-guides.info/Hardlinks/How-to-setup-for/Synology/#appdata
@@ -298,6 +299,41 @@ services:
       - ${DOCKERSTORAGEDIR}/media:/data/media:rw
 
 
+################################## GoAccess - Visuallize logs ##############################
+# GoAccess - Visuallize logs
+# mkdir -p /volume1/docker/arr-data/goaccess/logs
+############################################################################################
+  goaccess:
+    container_name: goaccess
+    image: justsky/goaccess-for-nginxproxymanager:latest
+    restart: unless-stopped   
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002
+      #- SKIP_ARCHIVED_LOGS=False #optional   
+      #- BASIC_AUTH=False #optional
+      #- BASIC_AUTH_USERNAME=user #optional
+      #- BASIC_AUTH_PASSWORD=pass #optional                
+    ports:
+      - 7880:7880
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      #- ./data/npm_data/logs:/opt/log
+      - ${DOCKERCONFDIR}/goaccess/logs:/opt/log
+        # - ./data/npm_data/logs/proxy-host-1_access.log:/opt/log/proxy-host-1_access.log
+
+        
 ################################# ARR Stack Dedicated Network ##############################
 # ARR Stack Dedicated Network
 ############################################################################################
@@ -307,6 +343,19 @@ networks:
     name: arr_network
 
 
+
+
+
+
+
+
+
+    
+##############################################################################################################################################################################################  
+##############################################################################################################################################################################################  
+##############################################################################################################################################################################################      
+##############################################################################################################################################################################################  
+##############################################################################################################################################################################################  
 ##############################################################################################################################################################################################    
 #    devices:                                        # optional: if you have a Syno with an Intel CPU with quicksync and want hardware transcoding (only with Plex Pass) uncomment this line.
 #      - /dev/dri:/dev/dri                           # optional: if you have a Syno with an Intel CPU with quicksync and want hardware transcoding (only with Plex Pass) uncomment this line.
