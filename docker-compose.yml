@@ -39,6 +39,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 7878:7878
     volumes:
@@ -69,6 +72,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 8989:8989
     volumes:
@@ -99,6 +105,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 6767:6767
     volumes:
@@ -129,6 +138,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 8686:8686
     volumes:
@@ -159,6 +171,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 6969:6969
     volumes:
@@ -191,6 +206,9 @@ services:
       - TZ=${TZ}
       - UMASK=002
       - ARGS=
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 9696:9696
     volumes:
@@ -221,6 +239,9 @@ services:
       - UMASK=002
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 8080:8080
       - 6881:6881
@@ -254,6 +275,9 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 8096:8096
     volumes:
@@ -291,6 +315,9 @@ services:
       - PLEX_ADVERTISE_URL=${PLEX_ADVERTISE_URL}
       - PLEX_NO_AUTH_NETWORKS=
       - PLEX_BETA_INSTALL=${PLEX_BETA_INSTALL}
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 32400:32400
     volumes:
@@ -324,7 +351,10 @@ services:
       #- SKIP_ARCHIVED_LOGS=False #optional   
       #- BASIC_AUTH=False #optional
       #- BASIC_AUTH_USERNAME=user #optional
-      #- BASIC_AUTH_PASSWORD=pass #optional                
+      #- BASIC_AUTH_PASSWORD=pass #optional    
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
     ports:
       - 7880:7880
     volumes:
