@@ -1,5 +1,17 @@
 version: "3.2"
 services:
+#-------------------------------------------------------------|
+# Services     | Open ports                                   |
+#-------------------------------------------------------------|
+# Radarr       |  7878:7878    |             |                |
+# Sonarr       |  8989:8989    |             |                |
+# Bazarr       |  6767:6767    |             |                |
+# lidarr       |  8686:8686    |             |                |
+# Prowlarr     |  9696:9696    |             |                |
+# jellyfin     |  8096:8096    |             |                |
+# Plex         |  32400:32400  |             |                |
+# qbittorrent  |  8080:8080    |  6881:6881  | 6881:6881/udp  |
+#--------------------------------------------------------------
 
 ################################ Radarr - Movies #####################################
 # Radarr - https://hotio.dev/containers/radarr/
@@ -154,7 +166,7 @@ services:
 
 
 ################################## QBITTORRENT - Downloader ##############################
-# QBITTORRENT - Downloader
+# qbittorrent - Downloader
 # mkdir /volume1/docker/arr-data/qbittorrent
 ##########################################################################################
   qbittorrent:
@@ -188,7 +200,7 @@ services:
 
 
 ##################################### JELLYFIN - Media Server ############################
-# JELLYFIN - Media Server
+# jellyfin - Media Server
 # mkdir -p /volume1/docker/arr-data/jellyfin/config
 # mkdir -p /volume1/docker/arr-data/jellyfin/cache
 ##########################################################################################
@@ -220,7 +232,7 @@ services:
 
 
 ################################## Plex - Media server ###################################
-# Plex - https://hotio.dev/containers/plex/
+# plex - https://hotio.dev/containers/plex/
 # mkdir -p /volume1/docker/arr-data/plex
 # Also please read the extra info => 
 # https://trash-guides.info/Hardlinks/How-to-setup-for/Synology/#appdata
