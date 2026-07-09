@@ -40,6 +40,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 7878:7878
     volumes:
@@ -73,6 +80,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 8989:8989
     volumes:
@@ -106,6 +120,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 6767:6767
     volumes:
@@ -139,6 +160,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 8686:8686
     volumes:
@@ -172,6 +200,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 6969:6969
     volumes:
@@ -207,6 +242,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 9696:9696
     volumes:
@@ -240,6 +282,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 8080:8080
       - 6881:6881
@@ -276,6 +325,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 8096:8096
     volumes:
@@ -316,6 +372,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 32400:32400
     volumes:
@@ -353,6 +416,13 @@ services:
     dns:
       - 1.1.1.1
       - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
     ports:
       - 7880:7880
     volumes:
