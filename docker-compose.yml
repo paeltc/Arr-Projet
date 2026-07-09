@@ -258,6 +258,7 @@ services:
     ports:
       - 9696:9696
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/prowlarr:/config:rw
 
 
