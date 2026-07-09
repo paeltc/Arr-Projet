@@ -217,7 +217,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/whisparr:/config
-      - ${DOCKERSTORAGEDIR}:/data/media
+      - ${DOCKERSTORAGEDIR}:/data
       
 
 ############################## Prowlarr - Indexer manager #################################
