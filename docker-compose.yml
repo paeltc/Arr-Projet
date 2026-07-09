@@ -135,7 +135,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/bazarr:/config
-      - ${DOCKERSTORAGEDIR}/media:/data/media
+      - ${DOCKERSTORAGEDIR}:/data/media
 
 
 ######################################## Lidarr - Music ###################################
@@ -176,7 +176,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/lidarr:/config
-      - ${DOCKERSTORAGEDIR}/media:/data/media
+      - ${DOCKERSTORAGEDIR}:/data/media
 
 
 ############################# Whisparr - Adult video #####################################
@@ -217,7 +217,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/whisparr:/config
-      - ${DOCKERSTORAGEDIR}/media:/data/media
+      - ${DOCKERSTORAGEDIR}:/data/media
       
 
 ############################## Prowlarr - Indexer manager #################################
