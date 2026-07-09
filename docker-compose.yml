@@ -342,6 +342,8 @@ services:
       retries: 5
     ports:
       - 8096:8096
+    devices:
+    - /dev/dri:/dev/dri  # For hardware acceleration (Intel/AMD)
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/jellyfin/config:/config
@@ -390,6 +392,8 @@ services:
       retries: 5
     ports:
       - 32400:32400
+    devices:
+    - /dev/dri:/dev/dri  # For hardware acceleration (Intel/AMD)
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/plex:/config:rw
