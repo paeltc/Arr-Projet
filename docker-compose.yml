@@ -21,6 +21,7 @@ services:
 ######################################################################################
   radarr:
     container_name: radarr
+    hostname: TPE-DS920-Radarr 
     image: ghcr.io/hotio/radarr:latest
     restart: unless-stopped
     logging:
@@ -61,6 +62,7 @@ services:
 #########################################################################################
   sonarr:
     container_name: sonarr
+    hostname: TPE-DS920-Sonarr 
     image: ghcr.io/hotio/sonarr:release
     restart: unless-stopped
     logging:
@@ -101,6 +103,7 @@ services:
 ##########################################################################################
   bazarr:
     container_name: bazarr
+    hostname: TPE-DS920-Bazarr 
     image: ghcr.io/hotio/bazarr:nightly
     restart: unless-stopped
     logging:
@@ -141,6 +144,7 @@ services:
 ###########################################################################################
   lidarr:
     container_name: lidarr
+    hostname: TPE-DS920-Lidarr 
     image: ghcr.io/hotio/lidarr:latest
     restart: unless-stopped
     logging:
@@ -181,6 +185,7 @@ services:
 ##########################################################################################
   whisparr:
     container_name: whisparr
+    hostname: TPE-DS920-Whisparr 
     image: ghcr.io/hotio/whisparr:latest
     restart: unless-stopped
     logging:
@@ -222,6 +227,7 @@ services:
 ###########################################################################################
   prowlarr:
     container_name: prowlarr
+    hostname: TPE-DS920-Prowlarr 
     image: ghcr.io/hotio/prowlarr:testing
     restart: unless-stopped
     logging:
@@ -261,6 +267,7 @@ services:
 ##########################################################################################
   qbittorrent:
     container_name: qbittorrent
+    hostname: TPE-DS920-Qbittorrent 
     image: ghcr.io/hotio/qbittorrent:latest
     restart: unless-stopped
     logging:
@@ -306,6 +313,7 @@ services:
 ##########################################################################################
   jellyfin:
     container_name: jellyfin
+    hostname: TPE-DS920-Jellyfin 
     image: ghcr.io/hotio/jellyfin:latest
     restart: unless-stopped
     logging:
@@ -349,6 +357,7 @@ services:
 ###########################################################################################
   plex:
     container_name: plex
+    hostname: TPE-DS920-Plex
     image: ghcr.io/hotio/plex
     restart: unless-stopped
     logging:
@@ -393,6 +402,7 @@ services:
 ############################################################################################
   goaccess:
     container_name: goaccess
+    hostname: TPE-DS920-GoAccess
     image: justsky/goaccess-for-nginxproxymanager:latest
     restart: unless-stopped   
     logging:
