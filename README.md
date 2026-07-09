@@ -9,3 +9,7 @@ sudo useradd -m -s /bin/bash arr-user
 sudo passwd arr-user  
 sudo chown -R 1001:1002 /volume1/arr-data /volume1/docker/arr-apps/  
 sudo chmod -R a=,a+rX,u+w,g+w /volume1/arr-data /volume1/docker/arr-apps/  
+
+## Obtain Plex claim token
+Log in to: https://www.plex.tv/claim  
+Copy the new token (it looks like claim-xxxxxx…)  
