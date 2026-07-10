@@ -10,8 +10,8 @@ services:
 # Whisparr     |  6969:6969    |             |                |
 # Prowlarr     |  9696:9696    |             |                |
 # Qbittorrent  |  8080:8080    |  6881:6881  | 6881:6881/udp  |
-# Jellyfin     |  8096:8096    |             |                |
-# Plex         |  32400:32400  |             |                |
+# Jellyfin     |  9096:8096    |             |                |
+# Plex         |  32500:32400  |             |                |
 # GoAccess     |  7880:7880    |             |                |
 #--------------------------------------------------------------
 
@@ -342,7 +342,7 @@ services:
       timeout: 10s
       retries: 5
     ports:
-      - 8096:8096
+      - 9096:8096
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/jellyfin/config:/config
@@ -390,7 +390,7 @@ services:
       timeout: 10s
       retries: 5
     ports:
-      - 32400:32400
+      - 32500:32400
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/plex:/config:rw
