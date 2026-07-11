@@ -13,3 +13,7 @@ sudo chmod -R a=,a+rX,u+w,g+w /volume1/arr-data /volume1/docker/arr-apps/
 ## Obtain Plex claim token
 Log in to: https://www.plex.tv/claim  
 Copy the new token (it looks like claim-xxxxxx…)  
+
+
+## Bazarr configuration  
+https://youtu.be/skLrFDUOhrk?si=eCH1shODgR_ev7Zc
