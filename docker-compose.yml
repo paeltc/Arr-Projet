@@ -53,7 +53,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/radarr:/config
-      - ${DOCKERSTORAGEDIR}:/data
+      - ${DOCKERSTORAGEDIR}:/volume1/data/
 
 
 ################################### Sonarr - TV Show ####################################
@@ -94,7 +94,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/sonarr:/config
-      - ${DOCKERSTORAGEDIR}:/data
+      - ${DOCKERSTORAGEDIR}:/volume1/data/
 
 
 ################################### Bazarr - Subtiles ####################################
@@ -176,7 +176,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/lidarr:/config
-      - ${DOCKERSTORAGEDIR}:/data/media
+      - ${DOCKERSTORAGEDIR}:/volume1/data/
 
 
 ############################# Whisparr - Adult video #####################################
@@ -217,7 +217,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/whisparr:/config
-      - ${DOCKERSTORAGEDIR}:/data
+      - ${DOCKERSTORAGEDIR}:/volume1/data/
       
 
 ############################## Prowlarr - Indexer manager #################################
