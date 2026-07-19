@@ -7,6 +7,7 @@ services:
     restart: always
     cap_add:
       - NET_ADMIN
+      - NET_RAW
     ports:
       - "3125:3001"
       - "3124:3000"
@@ -14,9 +15,10 @@ services:
       - PUID=1026
       - PGID=100
       - TZ=Europe/Bucharest
-      - CUSTOM_USER=marius
-      - PASSWORD=mariushosting
+      - CUSTOM_USER=paeltc
+      - PASSWORD=paeltc@hosting
     volumes:
-      - /volume1/docker/wireshark:/config
+      - /volume1/docker/wireshark/config:/config
+      - /volume1/docker/wireshark/captures:/captures
 
       ## https://mariushosting.com/how-to-install-wireshark-on-your-synology-nas/
