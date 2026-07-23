@@ -53,7 +53,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/radarr:/config
-      - ${DOCKERSTORAGEDIR}:/volume1/data/
+      - ${DOCKERSTORAGEDIR}:/volume1/data
 
 
 ################################### Sonarr - TV Show ####################################
@@ -135,7 +135,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/bazarr:/config
-      - ${DOCKERSTORAGEDIR}:/data/media
+      - ${DOCKERSTORAGEDIR}/media:/volume1/data/media
 
 
 ######################################## Lidarr - Music ###################################
@@ -304,7 +304,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/qbittorrent:/config
-      - ${DOCKERSTORAGEDIR}/torrents:/data
+      - ${DOCKERSTORAGEDIR}:/volume1/data/
 
 
 ##################################### Jellyfin - Media Server ############################
@@ -347,7 +347,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/jellyfin/config:/config
       - ${DOCKERCONFDIR}/jellyfin/cache:/cache
-      - ${DOCKERSTORAGEDIR}/media:/data/media:ro #read-only
+      - ${DOCKERSTORAGEDIR}/media:/volume1/data/media:ro #read-only
 
 
 ################################## Plex - Media server ###################################
@@ -394,7 +394,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/plex:/config:rw
-      - ${DOCKERSTORAGEDIR}/media:/data/media:rw
+      - ${DOCKERSTORAGEDIR}/media:/volume1/data/media:rw
 
 
 ################################## GoAccess - Visuallize logs ##############################
@@ -449,7 +449,7 @@ services:
 
 networks:
   default:
-    name: arr_network
+    name: arr-network
 
 
 
