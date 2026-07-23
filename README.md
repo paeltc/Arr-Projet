@@ -1,7 +1,7 @@
 # Arr-Projet 
 
 ## Create directory for the apps and data
-sudo mkdir -p /volume1/docker/arr-apps/{radarr,sonarr,bazarr,lidarr,whisparr,prowlarr,qbittorrent,jellyfin,plex,goaccess}  
+sudo mkdir -p /volume1/docker/arr-apps/{radarr,sonarr,bazarr,lidarr,whisparr,prowlarr,qbittorrent,gluetun,flaresolverr,jellyfin,plex,goaccess}  
 sudo mkdir -p /volume1/arr-data/{torrents/{tv,movies,music,books,complete,incomplete,adults},media/{tv,movies,music,books,adults}}
 
 ## Create the arr-user and give permission on arr-data
