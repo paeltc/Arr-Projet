@@ -334,7 +334,7 @@ services:
 # Gluetun - VPN
 # mkdir /volume1/docker/arr-data/gluetun
 ##########################################################################################
-   gluetun:
+  gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
     cap_add:
