@@ -10,8 +10,10 @@ services:
 # Whisparr     |  6969:6969    |             |                |
 # Prowlarr     |  9696:9696    |             |                |
 # Qbittorrent  |  8080:8080    |  6881:6881  | 6881:6881/udp  |
+# Gluetun      |               |             |                |
 # Jellyfin     |  9096:8096    |             |                |
 # Plex         |  32500:32400  |             |                |
+# flaresolverr |  8191:8191    |             |                |
 # GoAccess     |  7880:7880    |             |                |
 #--------------------------------------------------------------
 
@@ -50,6 +52,9 @@ services:
       retries: 5
     ports:
       - 7878:7878
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/radarr:/config
@@ -91,6 +96,9 @@ services:
       retries: 5
     ports:
       - 8989:8989
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/sonarr:/config
@@ -132,6 +140,9 @@ services:
       retries: 5
     ports:
       - 6767:6767
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/bazarr:/config
@@ -173,6 +184,9 @@ services:
       retries: 5
     ports:
       - 8686:8686
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/lidarr:/config
@@ -214,6 +228,9 @@ services:
       retries: 5
     ports:
       - 6969:6969
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/whisparr:/config
@@ -257,6 +274,9 @@ services:
       retries: 5
     ports:
       - 9696:9696
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/prowlarr:/config:rw
@@ -301,10 +321,46 @@ services:
       - 8080:8080
       - 6881:6881
       - 6881:6881/udp
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/qbittorrent:/config
       - ${DOCKERSTORAGEDIR}:/volume1/data/
+
+      
+################################## Gluetun - VPN #########################################
+# Gluetun - VPN
+# mkdir /volume1/docker/arr-data/gluetun
+##########################################################################################
+   gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    ports: # Expose qBittorrent's web UI and torrent ports through VPN
+      - 8080:8080     # qBittorrent Web UI
+      - 6881:6881     # torrent tcp port
+      - 6881:6881/udp # torrent udp port
+      - 7878:7878     # Radarr
+      - 8989:8989     # Sonarr
+      - 8686:8686     # Lidarr
+      - 6767:6767     # Bazarr
+      - 9696:9696     # Prowlarr
+      - 8191:8191     # FlareSolverr
+    volumes:
+      - ${DOCKERCONFDIR}/gluetun:/gluetun
+    environment:
+      - VPN_TYPE=${VPN_TYPE}
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - OPENVPN_USER=${OPENVPN_USER}
+      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+      - VPN_PORT_FORWARDING=${VPN_PORT_FORWARDING}
+      - SERVER_COUNTRIES=${SERVER_COUNTRIES}
+      - TZ=${TIMEZONE}     
 
 
 ##################################### Jellyfin - Media Server ############################
@@ -376,9 +432,6 @@ services:
       - TZ=${TZ}
       - UMASK=002
       - PLEX_CLAIM=${PLEX_CLAIM_TOKEN}
-      #- PLEX_ADVERTISE_URL=${PLEX_ADVERTISE_URL}
-      #- PLEX_NO_AUTH_NETWORKS=
-      #- PLEX_BETA_INSTALL=${PLEX_BETA_INSTALL}
     dns:
       - 1.1.1.1
       - 1.0.0.1
@@ -395,7 +448,45 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/plex:/config:rw
       - ${DOCKERSTORAGEDIR}/media:/volume1/data/media:rw
+      
 
+############################## Flaresolverr - Fix indexers ##############################
+# flaresolverr - Fix indexe for cloudflare
+# mkdir -p /volume1/docker/arr-data/flaresolverr
+############################################################################################
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002 
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
+    ports:
+      - 8191:8191
 
 ################################## GoAccess - Visuallize logs ##############################
 # GoAccess - Visuallize logs
@@ -439,8 +530,6 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/goaccess/logs:/opt/log
-      #- ./data/npm_data/logs:/opt/log
-      # - ./data/npm_data/logs/proxy-host-1_access.log:/opt/log/proxy-host-1_access.log
 
         
 ################################# ARR Stack Dedicated Network ##############################
