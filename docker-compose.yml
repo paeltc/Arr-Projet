@@ -386,7 +386,6 @@ services:
       - ${DOCKERCONFDIR}/gluetun:/gluetun
        
 
-
 ##################################### Jellyfin - Media Server ############################
 # Jellyfin - Media Server
 # mkdir -p /volume1/docker/arr-data/jellyfin/config
@@ -511,6 +510,7 @@ services:
       - gluetun
     ports:
       - 8191:8191
+      
 
 ################################## GoAccess - Visuallize logs ##############################
 # GoAccess - Visuallize logs
