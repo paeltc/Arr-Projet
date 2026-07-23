@@ -360,7 +360,7 @@ services:
       - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
       - VPN_PORT_FORWARDING=${VPN_PORT_FORWARDING}
       - SERVER_COUNTRIES=${SERVER_COUNTRIES}
-      - TZ=${TIMEZONE}     
+      - TZ=${TZ}     
 
 
 ##################################### Jellyfin - Media Server ############################
