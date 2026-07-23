@@ -10,10 +10,10 @@ services:
 # Whisparr     |  6969:6969    |             |                |
 # Prowlarr     |  9696:9696    |             |                |
 # Qbittorrent  |  8080:8080    |  6881:6881  | 6881:6881/udp  |
+# flaresolverr |  8191:8191    |             |                |
 # Gluetun      |               |             |                |
 # Jellyfin     |  9096:8096    |             |                |
 # Plex         |  32500:32400  |             |                |
-# flaresolverr |  8191:8191    |             |                |
 # GoAccess     |  7880:7880    |             |                |
 #--------------------------------------------------------------
 
@@ -329,6 +329,45 @@ services:
       - ${DOCKERCONFDIR}/qbittorrent:/config
       - ${DOCKERSTORAGEDIR}:/volume1/data/
 
+
+############################## Flaresolverr - Fix indexers ##############################
+# flaresolverr - Fix indexe for cloudflare
+# mkdir -p /volume1/docker/arr-data/flaresolverr
+############################################################################################
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-file: ${DOCKERLOGGING_MAXFILE}
+        max-size: ${DOCKERLOGGING_MAXSIZE}
+    labels:
+      - org.hotio.pullio.update=${PULLIO_UPDATE}
+      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
+      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=002 
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    env_file:
+      - .env
+    healthcheck:
+      test: ping -c 1 www.google.com || exit 1
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
+    depends_on:
+      - gluetun
+    ports:
+      - 8191:8191
+
       
 ################################## Gluetun - VPN #########################################
 # Gluetun - VPN
@@ -471,45 +510,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/plex:/config:rw
       - ${DOCKERSTORAGEDIR}/media:/volume1/data/media:rw
-      
-
-############################## Flaresolverr - Fix indexers ##############################
-# flaresolverr - Fix indexe for cloudflare
-# mkdir -p /volume1/docker/arr-data/flaresolverr
-############################################################################################
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: flaresolverr
-    restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        max-file: ${DOCKERLOGGING_MAXFILE}
-        max-size: ${DOCKERLOGGING_MAXSIZE}
-    labels:
-      - org.hotio.pullio.update=${PULLIO_UPDATE}
-      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
-      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - UMASK=002 
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
-    env_file:
-      - .env
-    healthcheck:
-      test: ping -c 1 www.google.com || exit 1
-      interval: 20s
-      timeout: 10s
-      retries: 5
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
-    ports:
-      - 8191:8191
       
 
 ################################## GoAccess - Visuallize logs ##############################
