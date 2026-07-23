@@ -340,7 +340,7 @@ services:
     cap_add:
       - NET_ADMIN
     devices:
-      - /dev/net/tun
+      - /dev/net/tun:/dev/net/tun
     ports: # Expose qBittorrent's web UI and torrent ports through VPN
       - 8080:8080     # qBittorrent Web UI
       - 6881:6881     # torrent tcp port
