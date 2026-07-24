@@ -52,9 +52,6 @@ services:
       retries: 5
     ports:
       - 7878:7878
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/radarr:/config
@@ -96,9 +93,6 @@ services:
       retries: 5
     ports:
       - 8989:8989
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/sonarr:/config
@@ -140,9 +134,6 @@ services:
       retries: 5
     ports:
       - 6767:6767
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/bazarr:/config
@@ -184,9 +175,6 @@ services:
       retries: 5
     ports:
       - 8686:8686
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/lidarr:/config
@@ -228,9 +216,6 @@ services:
       retries: 5
     ports:
       - 6969:6969
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/whisparr:/config
@@ -274,9 +259,6 @@ services:
       retries: 5
     ports:
       - 9696:9696
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/prowlarr:/config:rw
@@ -321,9 +303,6 @@ services:
       - 8080:8080
       - 6881:6881
       - 6881:6881/udp
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${DOCKERCONFDIR}/qbittorrent:/config
@@ -362,70 +341,9 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    network_mode: "service:gluetun"  # Routes all traffic through Gluetun
-    depends_on:
-      - gluetun
     ports:
       - 8191:8191
 
-      
-################################## Gluetun - VPN #########################################
-# Gluetun - VPN
-# mkdir /volume1/docker/arr-data/gluetun
-##########################################################################################
-  gluetun:
-    image: qmcgaw/gluetun
-    container_name: gluetun
-    restart: unless-stopped
-    cap_add:
-      - NET_ADMIN
-    devices:
-      - /dev/net/tun:/dev/net/tun
-    logging:
-      driver: json-file
-      options:
-        max-file: ${DOCKERLOGGING_MAXFILE}
-        max-size: ${DOCKERLOGGING_MAXSIZE}
-    labels:
-      - org.hotio.pullio.update=${PULLIO_UPDATE}
-      - org.hotio.pullio.notify=${PULLIO_NOTIFY}
-      - org.hotio.pullio.discord.webhook=${PULLIO_DISCORD_WEBHOOK}
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - UMASK=002
-      # Open VPN
-      - VPN_TYPE=${VPN_TYPE}
-      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
-      - OPENVPN_USER=${OPENVPN_USER}
-      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
-      - VPN_PORT_FORWARDING=${VPN_PORT_FORWARDING}
-      - SERVER_COUNTRIES=${SERVER_COUNTRIES} 
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
-    env_file:
-      - .env
-    healthcheck:
-      test: ping -c 1 www.google.com || exit 1
-      interval: 20s
-      timeout: 10s
-      retries: 5
-    ports: # Expose qBittorrent's web UI and torrent ports through VPN
-      - 8080:8080     # qBittorrent Web UI
-      - 6881:6881     # torrent tcp port
-      - 6881:6881/udp # torrent udp port
-      - 7878:7878     # Radarr
-      - 8989:8989     # Sonarr
-      - 8686:8686     # Lidarr
-      - 6767:6767     # Bazarr
-      - 6969:6969     # Whisparr
-      - 9696:9696     # Prowlarr
-      - 8191:8191     # FlareSolverr
-    volumes:
-      - ${DOCKERCONFDIR}/gluetun:/gluetun
-       
 
 ##################################### Jellyfin - Media Server ############################
 # Jellyfin - Media Server
