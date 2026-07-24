@@ -23,7 +23,6 @@ services:
 ######################################################################################
   radarr:
     container_name: radarr
-    hostname: TPE-DS920-Radarr 
     image: ghcr.io/hotio/radarr:latest
     restart: unless-stopped
     logging:
@@ -40,9 +39,6 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
     env_file:
       - .env
     healthcheck:
@@ -50,8 +46,6 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    ports:
-      - 7878:7878
     network_mode: "service:gluetun"  # Routes all traffic through Gluetun
     depends_on:
       - gluetun
