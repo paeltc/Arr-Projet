@@ -308,9 +308,6 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002 
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
     env_file:
       - .env
     healthcheck:
@@ -321,8 +318,6 @@ services:
     network_mode: "service:gluetun"  # Routes all traffic through Gluetun
     depends_on:
       - gluetun
-    ports:
-      - 8191:8191
 
       
 ################################## Gluetun - VPN #########################################
@@ -332,6 +327,7 @@ services:
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
+    hostname: TPE-DS920-Gluetun
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
