@@ -99,7 +99,6 @@ services:
 ##########################################################################################
   bazarr:
     container_name: bazarr
-    hostname: TPE-DS920-Bazarr 
     image: ghcr.io/hotio/bazarr:nightly
     restart: unless-stopped
     logging:
@@ -116,9 +115,6 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK=002
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
     env_file:
       - .env
     healthcheck:
@@ -126,8 +122,6 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    ports:
-      - 6767:6767
     network_mode: "service:gluetun"  # Routes all traffic through Gluetun
     depends_on:
       - gluetun
