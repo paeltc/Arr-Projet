@@ -214,7 +214,6 @@ services:
 ###########################################################################################
   prowlarr:
     container_name: prowlarr
-    hostname: TPE-DS920-Prowlarr 
     image: ghcr.io/hotio/prowlarr:testing
     restart: unless-stopped
     logging:
@@ -232,9 +231,6 @@ services:
       - TZ=${TZ}
       - UMASK=002
       - ARGS=
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
     env_file:
       - .env
     healthcheck:
@@ -242,8 +238,6 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    ports:
-      - 9696:9696
     network_mode: "service:gluetun"  # Routes all traffic through Gluetun
     depends_on:
       - gluetun
