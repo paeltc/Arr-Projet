@@ -252,7 +252,6 @@ services:
 ##########################################################################################
   qbittorrent:
     container_name: qbittorrent
-    hostname: TPE-DS920-Qbittorrent 
     image: ghcr.io/hotio/qbittorrent:latest
     restart: unless-stopped
     logging:
@@ -271,9 +270,6 @@ services:
       - UMASK=002
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
     env_file:
       - .env
     healthcheck:
@@ -281,10 +277,6 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
-    ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
     network_mode: "service:gluetun"  # Routes all traffic through Gluetun
     depends_on:
       - gluetun
