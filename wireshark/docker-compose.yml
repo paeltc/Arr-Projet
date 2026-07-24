@@ -28,8 +28,8 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - CUSTOM_USER=paeltc
-      - PASSWORD=paeltc@hosting
+      - CUSTOM_USER=${CUSTOM_USER}
+      - PASSWORD=${PASSWORD}
       - TZ=${TZ}
       - UMASK=002
     dns:
